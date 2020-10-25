@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+*{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+div, p, label, ul, header, main, footer{
+    box-sizing: border-box;
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+html{
+    font-size: 10px
+}
+
+body{
+    font-size: 1.4rem;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+
+.main-box{
+    width: 100%;
+    height: 100%;
+    min-width: 1300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #f8f8f8;
+}
+
+.header{
+    width: 100%;
+    height: 60px;
+    background-color: rgba(0, 0, 0, .8);
+    display: flex;
+    position: relative;
+}
+.logo-item{
+    width: 200px;
+    height: 100%;
+    /*background-color: #c4d897;*/
+    padding: 0 20px;
+}
+.logo-item img{
+    width: 100%;
+    height: 100%;
+}
+
+.header-menu{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.header-menu li{
+    height: 100%;
+    width: 100px;
+    text-align: center;
+    transition: background 200ms ease;
+}
+.header-menu li.active, .header-menu li.active:hover{
+    background-color: #4545d8;
+}
+
+.header-menu li:hover{
+    background-color: rgba(69, 69, 216, 0.5);
+}
+
+.header-menu li a{
+    display: block;
+    line-height: 60px;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+/** 右侧登录按钮的区域 */
+.header-right{
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.header-right .header-right-btn{
+    font-size: 1.6rem;
+    padding: 8px 20px;
+    background-color: #d84932;
+    color: #fff;
+    border-radius: 4px;
+    transition: opacity 200ms linear;
+}
+.header-right .header-right-btn:hover{
+    opacity: .8;
+}
+.header-right .header-right-btn:not(:last-child){
+    margin-right: 20px;
+}
+
+/****************************************************************************************************/
+/** 中间部分样式 */
+
+.content-box{
+
+}
+
+
+.layui-carousel .carousel-image img{
+    width: 100%;
+}
+
+.content-item-block{
+    width: 1300px;
+    margin: 15px auto;
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px 20px;
+}
+
+.content-item-block h3{
+    line-height: 30px;
+    padding-bottom: 15px;
+    font-size: 2rem;
+    color: rgba(0, 0 , 0, .7);
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+.content-list-item{
+    height: 300px;
+    position: relative;
+}
+
+.content-list-item.null::after{
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url("../images/null.png");
+    background-size: 100% 100%;
+}
+
+/** 底部区域 */
+.footer{
+    height: 100px;
+    background-color: rgba(0, 0, 0, .8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.link-list{
+    width: 1300px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.link-list li{
+    width: 140px;
+    text-align: center;
+}
+.link-list li a{
+    font-size: 1.6rem;
+    color: #fff;
+}
+.link-list li a:hover{
+    text-decoration: underline;
+    color: #d871ac;
+}
+.link-list li:not(:last-child){
+    margin-right: 20px;
+}
+
+.footer p{
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+    font-size: 1.6rem;
+    line-height: 30px;
+    color: #fff;
+}
+\ No newline at end of file

@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+html, body{
+  margin: 0;
+  padding: 15px 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.img{
+  margin:20px;
+  width: 38px;
+
+}
+
+.fuc button{
+  background-color: rgba(3, 90, 245, 0.78);
+}
+.operation button{
+  background-color: rgba(6, 241, 166, 0.75);
+}
+.number  button{
+  background-color: rgba(0, 250, 250, 0.59);
+
+}
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.calculator-box{
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+  width: 320px;
+  height: 530px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #111010;
+}
+.calculator-show-box{
+  position: relative;
+  width: 100%;
+  height: 120px;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.calculator-text{
+  display: block;
+  width: 100%;
+  text-align: right;
+  font-size: 30px;
+  line-height: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+.calculator-btn-div{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 405px;
+  width: 100%;
+  border-collapse: collapse;
+}
+.calculator-btn-div li{
+  padding: 0;
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+}
+.calculator-btn-div :last-child{
+  border-right: none;
+}
+.calculator-btn-div ul:last-child{
+  border-right: none;
+}
+.calculator-btn-div ul:last-child li{
+  border-bottom: none;
+}
+.calculator-btn-div li button{
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  /*background-color: rgb(6, 241, 166);*/
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 220ms ease-in-out;
+}
+
+.calculator-btn-div li button:hover{
+  background-color: #0e0003;
+  border-radius: 10px;
+}

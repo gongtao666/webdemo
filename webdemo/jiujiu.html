@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>简易计算器</title>
+  <link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
+<body>
+<div class="calculator-box">
+  <!--显示屏-->
+  <div class="calculator-show-box">
+    <label class="calculator-text" id="cal-text">0</label>
+  </div>
+  <!--按钮区-->
+  <div class="calculator-btn-div">
+    <ul>
+      <li class="fuc"><button type="button" onclick="btnClick(this)">C</button></li>
+      <li class="fuc"><button type="button" onclick="btnClick(this)">删除</button></li>
+      <li class="operation"><button type="button" onclick="btnClick(this)">%</button></li>
+      <li class="operation"><button type="button" onclick="btnClick(this)">÷</button></li>
+    </ul>
+    <ul>
+      <li class="number"><button type="button" onclick="btnClick(this)">7</button></li>
+      <li class="number"><button type="button" onclick="btnClick(this)">8</button></li>
+      <li class="number"><button type="button" onclick="btnClick(this)">9</button></li>
+      <li class="operation"><button type="button" onclick="btnClick(this)">x</button></li>
+    </ul>
+    <ul>
+      <li class="number"><button type="button" onclick="btnClick(this)">4</button></li>
+      <li class="number"><button type="button" onclick="btnClick(this)">5</button></li>
+      <li class="number"><button type="button" onclick="btnClick(this)">6</button></li>
+      <li class="operation"><button type="button" onclick="btnClick(this)">-</button></li>
+    </ul>
+    <ul>
+      <li class="number"><button type="button" onclick="btnClick(this)">1</button></li>
+      <li class="number"><button type="button" onclick="btnClick(this)">2</button></li>
+      <li class="number"><button type="button" onclick="btnClick(this)">3</button></li>
+      <li class="operation"><button type="button" onclick="btnClick(this)">+</button></li>
+    </ul>
+
+    <ul>
+      <li class="number"><button type="button" onclick="btnClick(this)">0</button></li>
+      <li class="number"><button type="button" onclick="btnClick(this)">·</button></li>
+      <li class="operation"style="width: 160px"><button type="button" onclick="btnClick(this)">=</button></li>
+    </ul>
+  </div>
+</div>
+<!--
+   编写计算器步骤
+   1、编写页面（建议使用table+div布局）
+   2、给按键添加点击事件，并定义实现方法
+   3、定义按键类型 并使用if判断按钮类型
+   4、实现将内容显示到页面显示区域
+   5、如果为按键是数字类型（包含小数点），将每一次的按键内容拼接在一起并显示在页面（定义函数外部变量实现），如果是小数点需要判断是否已经输入了0
+   6、点击运算符按钮后，将当前输入的值保存到另外一个变量保存，并保存当前运算符号；判断是否已经输入了符号和值，如果是则进行计算 并显示结果
+   7、点击功能按钮：
+      7.1 C（清除）重置所有变量的值
+      7.2 删除 删除当前输入的最后一位值（需注意值是否为字符串类型），如果已经进行了运算，则不允许删除操作
+-->
+
+<!--
+  今日作业
+  1、编写计算器页面（按钮区域不允许使用table标签）
+  2、功能按钮、运算符、数字按钮背景色不能一致
+-->
+<script>
+  // 定义变量
+  let crtInputStr = '',// 当前输入的字符串
+    lastInputStr = '',// 上一次输入的值
+    calTypeStr = '', // 计算方式
+    isInputType = false, // 是否输入了计算符号
+    isDel = true, // 是否可以删除(退格)
+    recordStr = ''; // 记录步骤
+
+  // 点击事件
+  function btnClick(event) {
+    // console.log(event.innerHTML);
+    const btnValue = event.innerText; // 获取当前按钮点击的值
+    // 定义类型
+    const numberList = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'],
+      symbolList = ['+', '-', 'x', '÷'],
+      actionList = ['C', '删除', '='];
+    // array.indexOf() 判断一个值是否在改数组存在 如果存在则返回元素所在的下标 如果不存在则返回-1
+    // console.log(typeof btnValue, numberList.indexOf(btnValue), parseInt(btnValue));
+    // 判断是否为数字类型
+    let res = true;
+    if (numberList.indexOf(btnValue) !== -1) {
+      res = clickNumber(btnValue); // 输入数字之后的处理
+    } else if (actionList.indexOf(btnValue) !== -1) {
+      res = clickAction(btnValue); // 点击操作按钮之后的处理
+    } else { // 当前按键为运算符
+      res = clickOperator(btnValue); // 当前点击运算按钮后进行的操作
+    }
+    if(res === true){
+      showResult(); // 显示运算结果
+    }
+  }
+
+  /** 当点击运算符后进行的处理 */
+  function clickOperator(btnValue) {
+    if(lastInputStr.length !== 0) {
+      calculator(); // 执行运算
+      // 将当前输入的值存入到另一个变量
+      lastInputStr = crtInputStr;
+      isInputType = true;
+      isDel = false;
+      calTypeStr = btnValue;
+    }else{
+      // 将当前输入的值存入到另一个变量
+      lastInputStr = crtInputStr;
+      isInputType = true;
+      calTypeStr = btnValue;
+      return false;
+    }
+    return true;
+  }
+
+  /** 当前点击了操作按钮之后进行的处理 */
+  function clickAction(btnValue) {
+    if (btnValue === 'C') {
+      // 执行清除操作
+      crtInputStr = '';
+      lastInputStr = '';
+      calTypeStr = '';
+      isDel = true;
+      recordStr = '';
+    } else if (btnValue === '删除') {
+      if (isDel !== true) {
+        alert('计算结果已出，不允许删除！');
+        return false;
+      }
+      // 判断删除的类型是否为字符串 不是字符串则转成字符串
+      if (typeof crtInputStr !== "string") {
+        crtInputStr += '';
+      }
+      // 截取最后一位之前的字符串  len - 1
+      crtInputStr = crtInputStr.substring(0, crtInputStr.length - 1);
+    }else{ // 计算结果
+      // 判断是否输入了运算符且当前输入是否有值
+      if(calTypeStr.length === 0 || isInputType === true || lastInputStr.length === 0){
+        return false;
+      }
+      // 记录运算
+      recordStr = `${lastInputStr} ${calTypeStr} ${crtInputStr} = `;
+      // console.log('运算类型:',calTypeStr,'参与运算的值：', crtInputStr, lastInputStr);
+      calculator(); // 判断进行不同的运算
+      // 执行运算后将结果值赋值到另一个参数
+      isInputType = true;
+      isDel = false;
+      lastInputStr = '';
+    }
+    return true;
+  }
+
+  // 运算封装
+  function calculator() {
+    switch (calTypeStr) { // 判断运算类型
+      case '+': { // 加法
+        crtInputStr  = parseFloat(lastInputStr) + parseFloat(crtInputStr);
+        // console.log(parseFloat(lastInputStr) + parseFloat(crtInputStr));
+        break;
+      }
+      case '-': { // 减法
+        crtInputStr  = lastInputStr - crtInputStr;
+        break;
+      }
+      case 'x': { // 乘法
+        crtInputStr  = lastInputStr * crtInputStr;
+        break;
+      }
+      case '÷': { // 除法
+        if(parseInt(crtInputStr) === 0){
+          alert('除数不能为0，请检查！');
+          return;
+        }
+        crtInputStr  = lastInputStr / crtInputStr;
+        break;
+      }
+      case '%': { // 取余
+        crtInputStr  = lastInputStr % crtInputStr;
+        break;
+      }
+    };
+  }
+
+
+  /** 当前点击数字按钮后进行的操作 */
+  function clickNumber(btnValue) {
+    // 判断当前是否已输入了符号
+    if(calTypeStr.length !== 0 && isInputType === true){
+      crtInputStr = '';
+      isInputType = false;
+      isDel = true;
+      recordStr = '';
+    }
+    // 判断是否已经输入了0
+    // alert(crtInputStr.substring(0,1));
+    if(crtInputStr.length === 0 && btnValue == '0'){
+      alert('第一位不允许输入0');
+      return false;
+    }
+    // 判断是否为小数点
+    if (btnValue === '.') {
+      if (crtInputStr.length === 0) {
+        crtInputStr += '0';
+      } else if (crtInputStr.indexOf('.') !== -1) {
+        alert('已有小数点存在，请不要在输入了！');
+        return false;
+      }
+    }
+
+
+    crtInputStr += btnValue;
+    return  true;
+  }
+
+  /** 内容输出显示到页面上 */
+  function showResult() {
+    // 显示计算结果
+    let showTextDom = document.getElementById('cal-text');
+    showTextDom.innerText = crtInputStr == '' ? 0 : crtInputStr.toString();
+    // 输出步骤
+    let showRecordDom = document.getElementById('record-box');
+    showRecordDom.innerText = recordStr;
+  }
+
+</script>
+
+</body>
+</html>
